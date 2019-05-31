@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hrms.mapper.AttendenceMapper">
+  <resultMap id="BaseResultMap" type="com.hrms.model.Attendence">
+    <id column="attendence_id" jdbcType="INTEGER" property="attendenceId" />
+    <result column="attendence_date" jdbcType="DATE" property="attendenceDate" />
+    <result column="employee_id" jdbcType="INTEGER" property="employeeId" />
+    <result column="work_time" jdbcType="TIMESTAMP" property="workTime" />
+    <result column="off_time" jdbcType="TIMESTAMP" property="offTime" />
+    <result column="is_late" jdbcType="BIT" property="isLate" />
+    <result column="is_absence" jdbcType="BIT" property="isAbsence" />
+
+  </resultMap>
+  <sql id="Base_Column_List">
+    attendence_id, attendence_date, employee_id, work_time, off_time,attendence_time
+  </sql>
+  <select id="selectAttendence" resultType="com.hrms.model.Attendence" resultMap="BaseResultMap" parameterType="com.hrms.model.Attendence">
+    select * from attendence
+  </select>
+  <insert id="punchIn" parameterType="com.hrms.model.Attendence">
+    insert into attendence(attendence_id, attendence_date, employee_id,
+      work_time,is_late,is_absence) values(null,#{attendenceDate},#{employeeId},#{workTime},#{isLate},#{isAbsence})
+  </insert>
+  <update id="punchOut" parameterType="com.hrms.model.Attendence">
+    update attendence set off_time =#{offTime} where DATE_FORMAT(attendence_date,'%Y%m%d')=DATE_FORMAT(NOW(),'%Y%m%d') and employee_id =#{employeeId}
+  </update>
+  <select id="isPounchIn" resultMap="BaseResultMap" parameterType="com.hrms.model.Attendence">
+    select * from attendence where DATE_FORMAT(attendence_date,'%Y%m%d')=DATE_FORMAT(NOW(),'%Y%m%d') and employee_id =#{employeeId}
+  </select>
+  <select id="isPounchOut">
+    select off_time from attendence where attendence_data=#{attendenceData} and employee_id =#{employeeId}
+  </select>
+  <update id="setLate" parameterType="com.hrms.model.Attendence">
+    update attendence set is_late=#{isLate} where attendence_data=#{attendenceData} and employee_id =#{employeeId}
+  </update>
+  <update id="setAbsence" parameterType="com.hrms.model.Attendence">
+    update attendence set is_absence=#{isAbsence} where attendence_data=#{attendenceData} and employee_id =#{employeeId}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from attendence
+    where attendence_id = #{attendenceId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from attendence
+    where attendence_id = #{attendenceId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hrms.model.Attendence">
+    insert into attendence (attendence_id, attendence_data, employee_id, 
+      work_time, off_time)
+    values (#{attendenceId,jdbcType=INTEGER}, #{attendenceData,jdbcType=DATE}, #{employeeId,jdbcType=INTEGER}, 
+      #{workTime,jdbcType=TIMESTAMP}, #{offTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hrms.model.Attendence">
+    insert into attendence
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="attendenceId != null">
+        attendence_id,
+      </if>
+      <if test="attendenceData != null">
+        attendence_data,
+      </if>
+      <if test="employeeId != null">
+        employee_id,
+      </if>
+      <if test="workTime != null">
+        work_time,
+      </if>
+      <if test="offTime != null">
+        off_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="attendenceId != null">
+        #{attendenceId,jdbcType=INTEGER},
+      </if>
+      <if test="attendenceData != null">
+        #{attendenceData,jdbcType=DATE},
+      </if>
+      <if test="employeeId != null">
+        #{employeeId,jdbcType=INTEGER},
+      </if>
+      <if test="workTime != null">
+        #{workTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="offTime != null">
+        #{offTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hrms.model.Attendence">
+    update attendence
+    <set>
+      <if test="attendenceData != null">
+        attendence_data = #{attendenceData,jdbcType=DATE},
+      </if>
+      <if test="employeeId != null">
+        employee_id = #{employeeId,jdbcType=INTEGER},
+      </if>
+      <if test="workTime != null">
+        work_time = #{workTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="offTime != null">
+        off_time = #{offTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where attendence_id = #{attendenceId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hrms.model.Attendence">
+    update attendence
+    set attendence_data = #{attendenceData,jdbcType=DATE},
+      employee_id = #{employeeId,jdbcType=INTEGER},
+      work_time = #{workTime,jdbcType=TIMESTAMP},
+      off_time = #{offTime,jdbcType=TIMESTAMP}
+    where attendence_id = #{attendenceId,jdbcType=INTEGER}
+  </update>
+</mapper>

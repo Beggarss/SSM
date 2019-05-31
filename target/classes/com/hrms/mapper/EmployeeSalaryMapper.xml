@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hrms.mapper.EmployeeSalaryMapper">
+  <resultMap id="BaseResultMap" type="com.hrms.model.EmployeeSalary">
+    <id column="emp_positiom" jdbcType="VARCHAR" property="empPositiom" />
+    <result column="salary" jdbcType="INTEGER" property="salary" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    emp_positiom, salary
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from emplo_salary
+    where emp_positiom = #{empPositiom,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from emplo_salary
+    where emp_positiom = #{empPositiom,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.hrms.model.EmployeeSalary">
+    insert into emplo_salary (emp_positiom, salary)
+    values (#{empPositiom,jdbcType=VARCHAR}, #{salary,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hrms.model.EmployeeSalary">
+    insert into emplo_salary
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="empPositiom != null">
+        emp_positiom,
+      </if>
+      <if test="salary != null">
+        salary,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="empPositiom != null">
+        #{empPositiom,jdbcType=VARCHAR},
+      </if>
+      <if test="salary != null">
+        #{salary,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hrms.model.EmployeeSalary">
+    update emplo_salary
+    <set>
+      <if test="salary != null">
+        salary = #{salary,jdbcType=INTEGER},
+      </if>
+    </set>
+    where emp_positiom = #{empPositiom,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hrms.model.EmployeeSalary">
+    update emplo_salary
+    set salary = #{salary,jdbcType=INTEGER}
+    where emp_positiom = #{empPositiom,jdbcType=VARCHAR}
+  </update>
+</mapper>
