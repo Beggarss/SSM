@@ -21,10 +21,11 @@
         <property name="prefix" value="/WEB-INF/jsp/"></property>
         <property name="suffix" value=".jsp"></property>
     </bean>
-    <!--&lt;!&ndash;拦截器&ndash;&gt;-->
+    <!--拦截器-->
     <!--<mvc:interceptors>-->
         <!--<mvc:interceptor>-->
-            <!--<mvc:mapping path="/"/>-->
+            <!--<mvc:mapping path="/administrator/*"/>-->
+            <!--<mvc:exclude-mapping path="/administrator/managerLogin.do"></mvc:exclude-mapping>-->
             <!--<bean class="com.hrms.interceptor.managerInterceptor"></bean>-->
         <!--</mvc:interceptor>-->
     <!--</mvc:interceptors>-->

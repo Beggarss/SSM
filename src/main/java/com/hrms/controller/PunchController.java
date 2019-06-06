@@ -1,12 +1,18 @@
 package com.hrms.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.hrms.model.Attendence;
+import com.hrms.model.Document;
 import com.hrms.model.Employee;
 import com.hrms.service.AttendenceService;
+import com.hrms.service.DirectoryService;
 import com.hrms.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,12 +21,15 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/hrms")
 public class PunchController {
     @Autowired
     private AttendenceService attendenceService;
+    @Autowired
+    private DirectoryService directoryService;
     @RequestMapping("/punchIn")
     public ModelAndView punchIn(HttpServletRequest httpServletRequest) throws ParseException {
         HttpSession session=httpServletRequest.getSession();
@@ -93,5 +102,16 @@ public class PunchController {
         }
       //  httpServletRequest.setAttribute("punchOutMessage","下班打卡成功！");
         return new ModelAndView("punch");
+    }
+    @RequestMapping("/download")
+    public ModelAndView download(ModelMap map, @RequestParam(required = false,defaultValue = "1",value = "pageNum") Integer pageNum, @RequestParam(defaultValue="1",value="pageSize") Integer pageSize){
+        //  Integer pageSize=1;//每页显示的个数
+        //分页查询
+        pageSize=1;
+        PageHelper.startPage(pageNum,pageSize);
+        List<Document> list =directoryService.selectAllDir();//获取所有用户信息
+        PageInfo<Document> pageInfo =new PageInfo<>(list);
+        map.addAttribute("pageInfo",pageInfo);
+        return new ModelAndView("download");
     }
 }

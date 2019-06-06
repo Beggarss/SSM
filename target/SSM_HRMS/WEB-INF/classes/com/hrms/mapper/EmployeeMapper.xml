@@ -9,6 +9,7 @@
     <result column="department_id" jdbcType="INTEGER" property="departmentId" />
     <result column="position" jdbcType="VARCHAR" property="position" />
     <result column="emp_password" jdbcType="VARCHAR" property="empPassword"></result>
+    <result column=""></result>
   </resultMap>
   <sql id="Base_Column_List">
     emp_id, emp_name, emp_email, emp_gender, department_id, position, emp_password
@@ -25,7 +26,7 @@
   <update id="updatePassWord" >
     update  employee set emp_password=#{empPassword} where emp_id=#{empId} and emp_email=#{empEmail}
   </update>
-  <select id="selectByPrimaryKey"  resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey"  parameterType="java.lang.String"  resultType="com.hrms.model.Employee" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from employee
@@ -35,7 +36,7 @@
     delete from employee
     where emp_id = #{empId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.hrms.model.Employee">
+  <insert id="insert" parameterType="com.hrms.model.Employee" useGeneratedKeys="true" keyProperty="emp_id">
     insert into employee (emp_name, emp_email,
       emp_gender, department_id, position
       )

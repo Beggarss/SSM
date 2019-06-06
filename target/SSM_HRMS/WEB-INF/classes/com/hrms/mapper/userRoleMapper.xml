@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hrms.mapper.userRoleMapper">
+  <resultMap id="BaseResultMap" type="com.hrms.model.userRoleKey">
+    <id column="user_name" jdbcType="VARCHAR" property="userName" />
+    <id column="role_name" jdbcType="VARCHAR" property="roleName" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="com.hrms.model.userRoleKey">
+    delete from user_role
+    where user_name = #{userName,jdbcType=VARCHAR}
+      and role_name = #{roleName,jdbcType=VARCHAR}
+  </delete>
+  <select id="getRoles" resultType="com.hrms.model.userRoleKey" resultMap="BaseResultMap">
+    select * from user_role where user_name=#{userName}  ;
+  </select>
+  <insert id="insert" parameterType="com.hrms.model.userRoleKey">
+    insert into user_role (user_name, role_name)
+    values (#{userName,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hrms.model.userRoleKey">
+    insert into user_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="roleName != null">
+        role_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleName != null">
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

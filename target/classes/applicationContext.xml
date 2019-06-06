@@ -34,5 +34,41 @@
         <property name="defaultEncoding" value="utf-8"></property>
         <property name="maxUploadSize" value="5242440"></property>
     </bean>
-
+    <!--<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>-->
+    <bean class="org.apache.shiro.web.mgt.DefaultWebSecurityManager" id="defaultWebSecurityManager">
+        <property name="realm">
+            <bean class="realm.CustomRealm">
+                <property name="credentialsMatcher" >
+                    <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+                        <property name="hashAlgorithmName" value="MD5"></property>
+                        <property name="hashIterations" value="1"></property>
+                    </bean>
+                </property>
+            </bean>
+        </property>
+        <property name="cacheManager"  >
+                <bean class="org.apache.shiro.cache.ehcache.EhCacheManager">
+                    <property name="cacheManagerConfigFile" value="classpath:shiro_ehcache.xml"></property>
+                </bean>
+        </property>
+    </bean>
+    <bean class="org.apache.shiro.spring.web.ShiroFilterFactoryBean" id="shiroFilter">
+        <property name="securityManager" ref="defaultWebSecurityManager"></property>
+        <property name="loginUrl" value="/hrms/login.do"></property>
+        <property name="successUrl" value="/success.jsp"></property>
+        <property name="unauthorizedUrl" value="/hrms/unauthorized.do"></property>
+        <property name="filterChainDefinitions">
+            <value>
+                /hrms/login.do  =anon
+                /hrms/doLogin.do=anon
+                /hrms/changePassWord=anon
+                /administrator/download.do*=anon
+                /administrator/* =roles[admin]
+                /hrms/punch.do =roles[user]
+                /hrms/punchIn.do=roles[user]
+                /unauthorized.jsp=anon
+                /** =authc
+            </value>
+        </property>
+    </bean>
 </beans>

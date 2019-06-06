@@ -5,9 +5,11 @@ import com.github.pagehelper.PageInfo;
 import com.hrms.model.Attendence;
 import com.hrms.model.Employee;
 import com.hrms.model.Document;
+import com.hrms.model.userRoleKey;
 import com.hrms.service.AttendenceService;
 import com.hrms.service.DirectoryService;
 import com.hrms.service.EmployeeService;
+import com.hrms.service.UserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -18,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -33,13 +36,17 @@ public class ManagerController {
     private AttendenceService attendenceService;
     @Autowired
     private DirectoryService directoryService;
+    @Autowired
+    private UserRoleService userRoleService;
     @RequestMapping("/managerLogin")
     public ModelAndView managerLogin(){
         return  new ModelAndView("managerLogin");
     }
     @RequestMapping("/managerPage")
-    public ModelAndView managerPage(@RequestParam("id") String id,@RequestParam("password") String password){
+    public ModelAndView managerPage(@RequestParam("id") String id,@RequestParam("password") String password,HttpServletRequest request){
         if(id.equals("1")&&password.equals("cs1072360540")) {
+            HttpSession session =request.getSession();
+            session.setAttribute("manager","manager");
             return new ModelAndView("main");
         }else{ return  new ModelAndView("managerLogin");
         }
@@ -88,6 +95,10 @@ public class ManagerController {
         employee.setPosition(position);
         System.out.println(position);
         int result=employeeService.insert(employee);
+        userRoleKey userRoleKey =new userRoleKey();
+        userRoleKey.setUserName(name);
+        userRoleKey.setRoleName("user");
+        userRoleService.insertUserAndRole(userRoleKey);
         if(result>0){
             httpServletRequest.setAttribute("addEmployeeMessage","员工添加成功！");
         }else{

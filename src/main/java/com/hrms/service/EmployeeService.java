@@ -11,10 +11,10 @@ import java.util.List;
 public class  EmployeeService{
     @Autowired
     private EmployeeMapper employeeMapper;
-    public Employee selectByPrimaryKey(Integer id){
+    public Employee selectByPrimaryKey(String id){
         return employeeMapper.selectByPrimaryKey(id);
     }
-    public int updatePassWord(Integer id,String password,String email){
+    public int updatePassWord(String id,String password,String email){
         return employeeMapper.updatePassWord(id,password,email);
     }
     public List<Employee> selectAllEmployee(){

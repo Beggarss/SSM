@@ -1,10 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html>
 <head>
     <title>XXX公司人力资源系统后台</title>
 </head>
 <body>
 <div class="hrms_container">
+
     <!-- 导航条 -->
     <%@ include file="./commom/head.jsp"%>
 

@@ -6,13 +6,13 @@
 <body>
 <div class="hrms_container">
     <!-- 导航条 -->
-    <%@ include file="./commom/head1.jsp"%>
+    <%@ include file="./commom/head.jsp"%>
 
     <!-- 中间部分（包括左边栏和员工/部门表单显示部分） -->
     <div class="hrms_body" style="position:relative; top:-15px;">
 
         <!-- 左侧栏 -->
-        <%@ include file="./commom/leftsidebar1.jsp"%>
+        <%@ include file="./commom/leftsidebar.jsp"%>
 
         <!-- 中间轮播图内容 -->
         <div class="hrms_main_ad col-sm-10">

@@ -1,7 +1,7 @@
 package com.hrms.model;
 
 public class Employee {
-    private Integer empId;
+    private String empId;
 
     private String empName;
 
@@ -15,11 +15,21 @@ public class Employee {
 
     private String empPassword;
 
-    public Integer getEmpId() {
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
+    }
+
+    private String roles;
+
+    public String getEmpId() {
         return empId;
     }
 
-    public void setEmpId(Integer empId) {
+    public void setEmpId(String empId) {
         this.empId = empId;
     }
 

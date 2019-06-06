@@ -15,15 +15,15 @@ public interface EmployeeMapper {
 
     int insertSelective(Employee record);
 
-    Employee selectByPrimaryKey(@Param("empId") Integer empId);
+    Employee selectByPrimaryKey(@Param("empId") String empId);
 
     int updateByPrimaryKeySelective(Employee record);
 
     int updateByPrimaryKey(Employee record);
 
-    Employee selectByIdAndPassWord( Integer id, Integer passWord);
+    Employee selectByIdAndPassWord( String id, Integer passWord);
 
-    int updatePassWord(@Param("empId") Integer id,@Param("empPassword") String password,@Param("empEmail") String email);
+    int updatePassWord(@Param("empId") String id,@Param("empPassword") String password,@Param("empEmail") String email);
 
     List<Employee> selectAllEmployee();
 }

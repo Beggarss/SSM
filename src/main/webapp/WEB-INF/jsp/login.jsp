@@ -16,7 +16,6 @@
     <script src="//cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
 <body>
-
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-md-offset-4" style="margin: 380px 380px">
@@ -28,19 +27,17 @@
                         <form role="form" action="/hrms/doLogin.do" method="post" id="login_form">
                             <fieldset>
                                 <div class="form-group">
-                                    用户名<input type="text" name="id" id="id"  placeholder="员工id" ><span>${id}</span><br>
+                                    用户名<input type="text" name="id" id="id"  placeholder="员工id" ><span>${id_message}</span><br>
                                 </div>
                                 <div class="form-group">
-                                    密码&nbsp;&nbsp;<input type="password" name="password" id="password"><span>${password}</span><br>
+                                    密码&nbsp;&nbsp;<input type="password" name="password" id="password"><span>${password_message}</span><br>
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" value="登录">
                                     &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                                     <a href="/hrms/doChangePassWord.do">忘记密码</a>
-                                   <%--// <a href="./managerLogin.jsp">管理员登录</a>--%>
-                                    <a href="/administrator/managerLogin.do">管理员登录</a>
-                                    <span>${MSG}</span>
                                 </div>
+                                <span>${message_login}</span>
 
                             </fieldset>
                         </form>

@@ -19,7 +19,7 @@ public class ChangePassWordController {
     @Autowired
     private EmployeeService employeeService;
     @RequestMapping("/changePassWord")
-    public ModelAndView changePassWord(@RequestParam("id") Integer id,@RequestParam("email") String email,@RequestParam("passWord") String passWord,HttpServletRequest httpServletRequest) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    public ModelAndView changePassWord(@RequestParam("id") String id,@RequestParam("email") String email,@RequestParam("passWord") String passWord,HttpServletRequest httpServletRequest) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         ModelAndView mv ;
         if(id==null){
             httpServletRequest.setAttribute("id","员工号不能为空！");

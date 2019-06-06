@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -31,6 +32,7 @@
 
             <div class="collapse navbar-collapse" id="hrms-navbar-collapse-1">
                 <ul class="nav navbar-nav">
+                    <shiro:hasRole name="admin">
                     <li class="active">
                         <a href="#">公司介绍 <span class="sr-only">(current)</span>  </a>
                     </li>
@@ -38,6 +40,7 @@
                     <li><a href="#">请假申请</a></li>
                     <li><a href="#">报销申请</a></li>
                     <li><a href="#" class="punch_record" >出勤记录</a></li>
+                    </shiro:hasRole>
                 </ul>
 
                 <form class="navbar-form navbar-left">
